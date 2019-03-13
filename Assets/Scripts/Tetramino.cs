@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Tetramino : MonoBehaviour
 {
+    float fall = 0;
+    public float fallSpeed = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +31,12 @@ public class Tetramino : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            
+            transform.Rotate(0, 0, 90);
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - fall >= fallSpeed)
         {
             transform.position += new Vector3(0, -1, 0);
+            fall = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
