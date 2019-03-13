@@ -24,10 +24,25 @@ public class Tetramino : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             transform.position += new Vector3(1, 0, 0);
+            //Debug.Log("right");
+            if (CheckIsValidPosition())
+            {
+            }else
+            {
+                transform.position += new Vector3(-1, 0, 0);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             transform.position += new Vector3(-1, 0, 0);
+            //Debug.Log("left");
+            if (CheckIsValidPosition())
+            {
+            }
+            else
+            {
+                transform.position += new Vector3(1, 0, 0);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -36,11 +51,38 @@ public class Tetramino : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - fall >= fallSpeed)
         {
             transform.position += new Vector3(0, -1, 0);
+            //Debug.Log("down");
+           if (CheckIsValidPosition())
+            {
+                //Debug.Log("down1" + transform.position);
+            }
+            else
+            {
+                //Debug.Log("down2" + transform.position);
+                transform.position += new Vector3(0, 1, 0);
+            }
+
             fall = Time.time;
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             
         }
+    }
+
+    bool CheckIsValidPosition()
+    {
+        foreach (Transform mino in transform)
+        {
+            //pos variable contains a rounded value of the mino's current position in the iteration
+            Vector2 pos = FindObjectOfType<Game>().Round(mino.position);
+            //Debug.Log(mino.position);
+            if(FindObjectOfType<Game>().CheckIsInsideGrid(pos) == false)
+            {
+                return false;
+            }
+
+        }
+        return true;
     }
 }
