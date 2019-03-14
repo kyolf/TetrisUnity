@@ -30,7 +30,9 @@ public class Tetramino : MonoBehaviour
             //Debug.Log("right");
             if (CheckIsValidPosition())
             {
-            }else
+                FindObjectOfType<Game>().UpdateGrid(this);
+            }
+            else
             {
                 transform.position += new Vector3(-1, 0, 0);
             }
@@ -41,6 +43,7 @@ public class Tetramino : MonoBehaviour
             //Debug.Log("left");
             if (CheckIsValidPosition())
             {
+                FindObjectOfType<Game>().UpdateGrid(this);
             }
             else
             {
@@ -70,6 +73,7 @@ public class Tetramino : MonoBehaviour
                 //Checking if it's a valid position in grid
                 if (CheckIsValidPosition())
                 {
+                    FindObjectOfType<Game>().UpdateGrid(this);
                 }
                 else
                 {
@@ -98,12 +102,14 @@ public class Tetramino : MonoBehaviour
            if (CheckIsValidPosition())
             {
                 //Debug.Log("down1" + transform.position);
+                FindObjectOfType<Game>().UpdateGrid(this);
             }
             else
             {
                 transform.position += new Vector3(0, 1, 0);
-                enabled = false;
 
+                //Spawning New Tetramino
+                enabled = false;
                 FindObjectOfType<Game>().SpawnNextTetramino();
                 //Debug.Log("down2" + transform.position);
             }
@@ -128,6 +134,11 @@ public class Tetramino : MonoBehaviour
                 return false;
             }
 
+            if(FindObjectOfType<Game>().GetTransformAtGridPos(pos) != null 
+                && FindObjectOfType<Game>().GetTransformAtGridPos(pos).parent != transform)
+            {
+                return false;
+            }
         }
         return true;
     }

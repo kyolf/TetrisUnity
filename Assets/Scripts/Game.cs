@@ -7,6 +7,8 @@ public class Game : MonoBehaviour
     public static int gridWidth = 10;
     public static int gridHeight = 20;
 
+    public static Transform[,] grid = new Transform[gridWidth, gridHeight];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,49 @@ public class Game : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void UpdateGrid(Tetramino tetramino)
+    {
+        for (int y = 0; y < gridHeight; ++y)
+        {
+            for (int x = 0; x < gridWidth; ++x)
+            {
+                if (grid[x, y] != null)
+                {
+                    //Check if parent transform is the tetramino transform
+                    //that we pass to our UpdateGrid
+                    if (grid[x, y].parent == tetramino.transform)
+                    {
+                        //for when it is moving down 1
+                        grid[x, y] = null;
+                    }
+                }
+            }
+        }
+
+        foreach (Transform mino in tetramino.transform)
+        {
+            Vector2 pos = Round(mino.position);
+            //Don't want to assign values to grid array the 
+            //value that is above the grid (index out of bounds errors)
+            if (pos.y < gridHeight)
+            {
+                grid[(int)pos.x, (int)pos.y] = mino;
+            }
+        }
+    }
+
+    public Transform GetTransformAtGridPos(Vector2 pos)
+    {
+        if(pos.y > gridHeight - 1)
+        {
+            return null;
+        }
+        else
+        {
+            return grid[(int)pos.x, (int)pos.y];
+        }
     }
 
     //Resources folder is instantiated at runtime
