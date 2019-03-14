@@ -10,7 +10,7 @@ public class Game : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnNextTetraMino();
+        SpawnNextTetramino();
     }
 
     // Update is called once per frame
@@ -20,10 +20,11 @@ public class Game : MonoBehaviour
     }
 
     //Resources folder is instantiated at runtime
-    public void SpawnNextTetraMino()
+    public void SpawnNextTetramino()
     {
         GameObject nextTetraMino = (GameObject)Instantiate(Resources.Load(GetRandTetramino(), typeof(GameObject)),
                                     new Vector2(5.0f, 20.0f), Quaternion.identity);
+        //Quaternion.identity = current rotation
     }
 
     public bool CheckIsInsideGrid(Vector2 pos)

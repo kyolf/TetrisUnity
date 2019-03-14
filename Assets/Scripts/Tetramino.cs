@@ -102,7 +102,10 @@ public class Tetramino : MonoBehaviour
             else
             {
                 transform.position += new Vector3(0, 1, 0);
-                Debug.Log("down2" + transform.position);
+                enabled = false;
+
+                FindObjectOfType<Game>().SpawnNextTetramino();
+                //Debug.Log("down2" + transform.position);
             }
 
             fall = Time.time;
