@@ -107,6 +107,8 @@ public class Tetramino : MonoBehaviour
             else
             {
                 transform.position += new Vector3(0, 1, 0);
+                Debug.Log(transform.position);
+                FindObjectOfType<Game>().DeleteRow();
 
                 //Spawning New Tetramino
                 enabled = false;
